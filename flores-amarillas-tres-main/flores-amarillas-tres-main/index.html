@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/flowers.png" type="image/x-icon">
+    <title>Flowers</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;1,900&display=swap');
+
+        *, *::before, *::after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        body {
+            color: azure;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', cursive;
+            position: relative;
+            /* Fondo degradado azul oscuro */
+            background: radial-gradient(circle at 50% 40%, #1a1a3a 0%, #0a0a1a 45%, #000 100%);
+        }
+
+        /* ---------- ESTRELLITAS ---------- */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.9), transparent),
+                radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(2px 2px at 40% 15%, rgba(255,235,59,0.9), transparent),
+                radial-gradient(1px 1px at 60% 75%, rgba(255,255,255,0.8), transparent),
+                radial-gradient(1.5px 1.5px at 75% 35%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 88% 60%, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 15% 85%, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1px 1px at 50% 45%, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1.5px 1.5px at 92% 15%, rgba(255,235,59,0.8), transparent),
+                radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.6), transparent);
+            animation: twinkle 4s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes twinkle {
+            0%   { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* ---------- RESPLANDOR AMARILLO QUE LATE ---------- */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 70vw;
+            height: 70vw;
+            max-width: 800px;
+            max-height: 800px;
+            background: radial-gradient(circle, rgba(255, 184, 0, 0.20), transparent 65%);
+            filter: blur(60px);
+            animation: pulse-glow 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+            50%      { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+        }
+
+        /* ---------- CONTENIDO POR ENCIMA ---------- */
+        .greetings,
+        .description,
+        .button {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ---------- SALUDO ---------- */
+        .greetings {
+            font-size: 7rem;
+            font-weight: 900;
+            display: flex;
+            gap: 0.05em;
+            perspective: 800px;
+            align-items: baseline;
+        }
+
+        .greetings > span {
+            display: inline-block;
+            transform-origin: bottom center;
+            animation:
+                pop-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) backwards,
+                wave 3s ease-in-out infinite;
+            animation-delay: var(--d), calc(var(--d) + 0.8s);
+            text-shadow: 0 0 12px currentColor, 0 0 30px currentColor;
+            animation-fill-mode: backwards, none;
+        }
+
+        /* El espacio no tiene animación */
+        .greetings .space {
+            width: 0.6em;
+            animation: none !important;
+            visibility: hidden;
+            text-shadow: none !important;
+        }
+
+        /* Colores + delays por letra */
+        .greetings > span:nth-child(1) { --d: 0s;    color: #ff2a6d; }
+        .greetings > span:nth-child(2) { --d: .12s;  color: #ff9f1c; }
+        .greetings > span:nth-child(3) { --d: .24s;  color: #ffd60a; }
+        .greetings > span:nth-child(4) { --d: .36s;  color: #2ec4b6; }
+        .greetings > span:nth-child(6) { --d: .60s;  color: #4361ee; }
+        .greetings > span:nth-child(7) { --d: .72s;  color: #7209b7; }
+        .greetings > span:nth-child(8) { --d: .84s;  color: #f72585; }
+        .greetings > span:nth-child(9) { --d: .96s;  color: #ffb703; }
+        .greetings > span:nth-child(10){ --d: 1.08s; color: #06d6a0; }
+
+        @keyframes pop-in {
+            0% {
+                opacity: 0;
+                transform: translateY(80px) rotateX(-90deg) scale(0.3);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) rotateX(0) scale(1);
+            }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50%      { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        /* ---------- DESCRIPCIÓN ---------- */
+        .description {
+            font-size: 1.5rem;
+            margin: 30px 0 20px;
+            text-align: center;
+            letter-spacing: 2px;
+            color: #f0f0f0;
+            opacity: 0;
+            animation: fade-up 1s ease-out 1.4s forwards;
+            padding: 0 20px;
+            max-width: 90vw;
+        }
+
+        @keyframes fade-up {
+            0%   { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0);    }
+        }
+
+        /* ---------- BOTÓN ---------- */
+        .button {
+            opacity: 0;
+            animation: fade-up 1s ease-out 1.8s forwards;
+        }
+
+        .botones {
+            padding: 0;
+            border-radius: 80px;
+            background-color: transparent;
+            border: none;
+            margin-top: 10px;
+        }
+
+        .botones a {
+            display: inline-block;
+            background-color: #0a2be9;
+            color: #fff;
+            padding: 12px 28px;
+            border-radius: 80px;
+            text-decoration: none;
+            font-family: 'Poppins', cursive;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(10, 43, 233, 0.5);
+        }
+
+        .botones a:hover {
+            background-color: #39c6d6;
+            transform: scale(1.08);
+            box-shadow: 0 0 25px rgba(57, 198, 214, 0.8);
+        }
+
+        .botones a:focus {
+            background-color: rgb(50, 194, 194);
+            outline: none;
+        }
+
+        /* ---------- RESPONSIVE ---------- */
+
+        /* Tablets */
+        @media screen and (max-width: 900px) {
+            .greetings { font-size: 5rem; }
+            .description { font-size: 1.25rem; }
+        }
+
+        /* Celulares grandes */
+        @media screen and (max-width: 574px) {
+            .greetings {
+                font-size: 3rem;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.03em;
+            }
+            .description {
+                font-size: 1rem;
+                letter-spacing: 1px;
+                padding: 0 16px;
+            }
+            .botones a {
+                padding: 10px 22px;
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Celulares chicos */
+        @media screen and (max-width: 380px) {
+            .greetings { font-size: 2.4rem; }
+            .description { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="greetings">
+        <span>H</span>
+        <span>o</span>
+        <span>l</span>
+        <span>a</span>
+        <span class="space"></span>
+        <span>B</span>
+        <span>A</span>
+        <span>B</span>
+        <span>Y</span>
+        <span>!</span>
+    </div>
+
+    <div class="description">
+        <span>Dicen que el 21 de septiembre se regalan flores amarillas... así que aquí están las tuyas</span>
+    </div>
+
+    <div class="button">
+        <button class="botones">
+            <a href="flower.html">🥺 Precioname porfis 🥺</a>
+        </button>
+    </div>
+</body>
+
+</html>
